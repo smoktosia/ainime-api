@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-import User, { IUser } from '../models/User.model'
+import User, { IUser } from 'models/User.model'
 
 import { isEmail, isAlphanumeric } from 'utils/dataValidation'
 
