@@ -12,7 +12,6 @@ declare interface Middleware {
 }
 
 declare interface TUser extends mongooseTypes.Document {
-    // _id: mongooseTypes.ObjectId
     username: string
     avatar?: { url: string, date: Date }
     email: string
@@ -20,9 +19,3 @@ declare interface TUser extends mongooseTypes.Document {
     role?: number
     last_date?: Date
 }
-
-// declare namespace PassportJWT {
-//     interface VerifiedCallback {
-//         (error: any, user?: any, info? any): void;
-//     }
-// }

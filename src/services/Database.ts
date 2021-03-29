@@ -1,4 +1,4 @@
-import { connect, connection, Mongoose } from 'mongoose'
+import { connect, connection } from 'mongoose'
 import chalk from 'chalk'
 
 const connectionString = process.env.DB_CONNECTION_STRING
@@ -20,13 +20,16 @@ export default () => {
         useUnifiedTopology: true,
         useCreateIndex: true
     })
+        .catch(err => {
+            // throw err to file or smth
+        })
 
     connection.on('connected', () => {
         console.log(c.connected('Mongoose is connected'))
     })
 
     connection.on('error', err => {
-        console.log(c.error(`Mongoose connection has occured ${err} error`))
+        console.log(c.error(`Mongoose connection has occured "${err}" error`))
     })
 
     connection.on('disconnected', () => {

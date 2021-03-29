@@ -1,5 +1,5 @@
 import passport from 'passport'
-import passportJWT, { Strategy as JwtStrategy, StrategyOptions } from 'passport-jwt'
+import { Strategy as JwtStrategy, StrategyOptions } from 'passport-jwt'
 
 // types
 import { Request } from 'express'
@@ -10,11 +10,17 @@ import User from '../models/User.model'
 const secret = process.env.TOKEN_SECRET as string
 
 const jwtFromCookie = (req: Request) => {
-    const token = req.cookies.JWT as string | undefined
-    return token || ''
-}
+    let token = null;
+
+    if (req && req.signedCookies && req.signedCookies.jwt) {
+        token = req.signedCookies.jwt;
+    }
+
+    return token;
+};
 
 const verifyCallback: VerifyCallback = (payload, done) => {
+
     if(!payload || !payload.id) return done(null)
 
     return User.findOne({_id: payload.id})
@@ -22,7 +28,7 @@ const verifyCallback: VerifyCallback = (payload, done) => {
             return done(null, user)
         })
         .catch(err => {
-            return done(err, undefined)
+            return done(err)
         })
 }
 
